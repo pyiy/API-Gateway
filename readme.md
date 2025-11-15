@@ -51,6 +51,12 @@
 
 ---
 
+## ⭐ 系统演示
+- [抱脸docker演示](https://g2i-ai-manager.hf.space)
+- [vercel演示](https://aigl.vercel.app)
+- hf和vercel账户数据互通
+- 体验用户账号密码：linuxdo/linuxdo
+
 ## 🛠️ 快速开始
 
 ### 环境要求
@@ -125,6 +131,9 @@ services:
 ```bash
 docker-compose up -d
 ```
+
+方法 3：使用huggingface 抱脸 duplicate一键部署
+访问[hf抱脸](https://huggingface.co/spaces/g2i/Ai-Manager?duplicate=true)样板房，点击duplicate复制空间，设置内修改环境变量即可
 
 默认账户
 - 管理员账户：`admin` / `admin123`
