@@ -1,62 +1,38 @@
-name: 构建并推送 Docker 镜像到 GHCR
+# ---- 依赖阶段 ----
+FROM node:18-alpine AS deps
+WORKDIR /app
+COPY package.json ./
+RUN npm install --no-audit --no-fund
 
-on:
-  push:
-    branches: [ "main", "master" ]
-    tags: [ 'v*.*.*' ]
-  pull_request:
-    branches: [ "main", "master" ]
+# ---- 构建阶段 ----
+FROM node:18-alpine AS builder
+WORKDIR /app
+COPY . .
+COPY --from=deps /app/node_modules ./node_modules
 
-env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
+# 设置构建环境变量
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
+# 尝试构建
+RUN npm run build
 
-    steps:
-    - name: 检出代码
-      uses: actions/checkout@v4
+# ---- 运行阶段 ----
+FROM node:18-alpine AS runner
+RUN addgroup -g 1001 -S nodejs && adduser -u 1001 -S nextjs -G nodejs
+WORKDIR /app
 
-    - name: 设置 Docker Buildx
-      uses: docker/setup-buildx-action@v3
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV HOSTNAME=0.0.0.0
+ENV PORT=3000
 
-    - name: 生成时间戳标签（北京时间 UTC+8）
-      id: timestamp
-      run: echo "current_timestamp=$(TZ='Asia/Shanghai' date +'%Y%m%d%H%M%S')" >> $GITHUB_OUTPUT
+# 复制运行文件
+COPY --from=builder --chown=nextjs:nodejs /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
+COPY --from=builder --chown=nextjs:nodejs /app/node_modules ./node_modules
+COPY --from=builder --chown=nextjs:nodejs /app/package.json ./package.json
 
-    - name: 登录到容器注册表
-      if: github.event_name != 'pull_request'
-      uses: docker/login-action@v3
-      with:
-        registry: ${{ env.REGISTRY }}
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: 提取元数据
-      id: meta
-      uses: docker/metadata-action@v5
-      with:
-        images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-        tags: |
-          type=raw,value=${{ steps.timestamp.outputs.current_timestamp }}
-          type=ref,event=branch
-          type=ref,event=pr
-          type=semver,pattern={{version}}
-          type=semver,pattern={{major}}.{{minor}}
-          type=raw,value=latest,enable={{is_default_branch}}
-
-    - name: 构建并推送 Docker 镜像
-      uses: docker/build-push-action@v5
-      with:
-        context: .
-        platforms: linux/amd64,linux/arm64
-        push: ${{ github.event_name != 'pull_request' }}
-        tags: ${{ steps.meta.outputs.tags }}
-        labels: ${{ steps.meta.outputs.labels }}
-        cache-from: type=gha
-        cache-to: type=gha,mode=max
+USER nextjs
+EXPOSE 3000
+CMD ["npm", "start"]
