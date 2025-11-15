@@ -10,7 +10,7 @@ COPY package.json ./
 COPY . .
 
 # 安装依赖并构建
-RUN npm install && npm run build
+RUN npm install --legacy-peer-deps && npm run build
 
 # =========================================
 # 2. 运行阶段 (最小化镜像)
