@@ -1,18 +1,7 @@
 import type { Metadata } from 'next'
-import { Geist, Geist_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { Toaster } from '@/components/ui/toaster'
 import './globals.css'
-
-const geist = Geist({ 
-  subsets: ["latin"],
-  variable: '--font-geist-sans', // 添加变量名
-});
-
-const geistMono = Geist_Mono({ 
-  subsets: ["latin"],
-  variable: '--font-geist-mono', // 添加变量名
-});
 
 export const metadata: Metadata = {
   title: 'AI API 中转站管理系统',
@@ -43,8 +32,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="zh-CN" className={`${geist.variable} ${geistMono.variable}`}>
-      <body className={`${geist.className} antialiased`}>
+    <html lang="zh-CN">
+      <body className="antialiased">
         {children}
         <Toaster />
         <Analytics />
