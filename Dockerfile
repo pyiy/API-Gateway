@@ -1,12 +1,12 @@
 # ---- 依赖阶段 ----
-FROM node:18-alpine AS deps
+FROM node:20-alpine AS deps
 RUN corepack enable && corepack prepare pnpm@latest --activate
 WORKDIR /app
 COPY package.json ./
 RUN pnpm install --no-optional
 
 # ---- 构建阶段 ----
-FROM node:18-alpine AS builder
+FROM node:20-alpine AS builder
 RUN corepack enable && corepack prepare pnpm@latest --activate
 WORKDIR /app
 COPY . .
@@ -14,7 +14,7 @@ COPY --from=deps /app/node_modules ./node_modules
 RUN pnpm run build
 
 # ---- 运行阶段 ----
-FROM node:18-alpine AS runner
+FROM node:20-alpine AS runner
 RUN addgroup -g 1001 -S nodejs && adduser -u 1001 -S nextjs -G nodejs
 WORKDIR /app
 
