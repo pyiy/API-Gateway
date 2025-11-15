@@ -55,8 +55,7 @@ npm install
 ```
 
 3. **环境配置**
-配置如下环境变量
-MYSQL_DNS，ADMIN_USERNAME，ADMIN_PASSWORD，格式如下：
+配置如下格式环境变量
 ```env
 MYSQL_DNS=mysql://username:password@host:port/database?ssl=true
 ADMIN_USERNAME=admin
