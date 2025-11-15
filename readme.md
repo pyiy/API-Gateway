@@ -1,27 +1,37 @@
-# API Gateway Manager
+ <div align="center">
 
-### 系统介绍
-这是一个功能完整的AI API中转站管理系统，基于Next.js构建，提供多用户支持、API站点管理、模型测试和统一认证等功能。
+# 🤖 API Gateway Manager
 
-## 功能特点
+**基于 Next.js 的 AI API 中转站管理系统**  
+支持多用户、API 站点管理、模型测试与统一认证
+
+</div>
+
+## 📌 系统介绍
+
+这是一个功能完整的 AI API 中转站管理系统，基于 Next.js 构建，提供多用户支持、API 站点管理、模型测试和统一认证等功能。
+
+---
+
+## ✨ 功能特点
 
 ### 🔐 认证系统
 - **双系统登录**：用户系统 + 管理员系统
 - **统一会话管理**：管理员可无缝切换用户/管理系统
-- **JWT认证**：安全的令牌验证机制
+- **JWT 认证**：安全的令牌验证机制
 - **自动跳转**：智能识别用户身份并跳转到对应系统
 
 ### 🚀 API 管理
-- **多站点支持**：管理多个AI API中转站
-- **自动检测**：自动检查API站点可用性（通过获取模型列表）
-- **模型列表**：自动获取支持的AI模型
-- **额度查询**：实时查询API使用额度（目前仅限newapi）
+- **多站点支持**：管理多个 AI API 中转站
+- **自动检测**：自动检查 API 站点可用性（通过获取模型列表）
+- **模型列表**：自动获取支持的 AI 模型
+- **额度查询**：实时查询 API 使用额度（目前仅限 newapi）
 - **批量测试**：支持批量测试模型响应
 
 ### 📊 仪表盘
 - **可视化统计**：图表展示站点状态统计
 - **实时监控**：显示可用/失效站点数量
-- **使用情况**：展示API调用统计数据
+- **使用情况**：展示 API 调用统计数据
 
 ### 👥 用户管理
 - **角色管理**：区分普通用户和管理员
@@ -29,165 +39,215 @@
 - **聊天集成**：快速跳转到聊天应用
 
 ### 🎨 界面设计
-- **响应式布局**：完美支持PC和移动端
-- **现代化UI**：基于TailwindCSS构建
+- **响应式布局**：完美支持 PC 和移动端
+- **现代化 UI**：基于 TailwindCSS 构建
 - **实时搜索**：模型列表支持模糊搜索
-- **Toast提示**：友好的操作反馈
+- **Toast 提示**：友好的操作反馈
 
 ### 🏆 多平台部署
-- **支持vercel一键部署**
-- **支付服务器部署手动**
-- **支持docker部署**
+- **支持 Vercel 一键部署**
+- **支持服务器手动部署**
+- **支持 Docker 部署**
 
-## 快速开始
+---
+
+## 🛠️ 快速开始
 
 ### 环境要求
-- Node.js 18+（vercel）
+- Node.js 18+（Vercel）
 - MySQL 5.7+
 - 现代浏览器
 
 ### 服务器部署
 
-1. **克隆项目**
 ```bash
+# 1. 克隆项目
 git clone <repository-url>
 cd ai-api-gateway
-```
 
-2. **安装依赖**
-```bash
+# 2. 安装依赖
 npm install
-```
 
-3. **环境配置**
-```env
-配置如下格式环境变量
+# 3. 配置环境变量
+# 格式如下：
 MYSQL_DNS=mysql://username:password@host:port/database?ssl=true
 ADMIN_USERNAME=admin
 ADMIN_PASSWORD=admin123
-```
 
-4. **启动应用**
-```bash
+# 4. 启动应用
 npm run dev
 ```
-### vercel部署
-1. **克隆项目**
-2. **打开vercel.com官网**
-3. **创建并导入该项目**
-4. **设置MYSQL_DNS，ADMIN_USERNAME，ADMIN_PASSWORD环境变量**
-5. **部署并设置自定义域名**
 
-### 默认账户
-- **管理员账户**：`admin` / `admin123`
-- **首次运行**：系统会自动创建数据库表和默认管理员
+Vercel 部署
 
-## 系统架构
+1. 克隆项目
+2. 打开 vercel.com 官网
+3. 创建并导入该项目
+4. 设置 `MYSQL_DNS`、`ADMIN_USERNAME`、`ADMIN_PASSWORD` 环境变量
+5. 部署并设置自定义域名
 
-### 数据库表结构
+Docker 部署
+
+方法 1：使用 `docker run`（端口 3000）
+
+```bash
+docker run -d \
+  --name api-gateway-manager \
+  -e MYSQL_DNS="mysql://username:password@host:port/database?ssl=true" \
+  -e ADMIN_USERNAME="admin" \
+  -e ADMIN_PASSWORD="admin123" \
+  -p 3000:3000 \
+  ghcr.io/eraycc/api-gateway-manager:latest
+```
+
+方法 2：使用 Docker Compose（推荐）
+
+创建 `docker-compose.yml` 文件：
+
+```yaml
+version: '3.8'
+
+services:
+  api-gateway-manager:
+    image: ghcr.io/eraycc/api-gateway-manager:latest
+    container_name: api-gateway-manager
+    environment:
+      - MYSQL_DNS=mysql://username:password@host:port/database?ssl=true
+      - ADMIN_USERNAME=admin
+      - ADMIN_PASSWORD=admin123
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+```
+
+运行命令：
+
+```bash
+docker-compose up -d
+```
+
+默认账户
+- 管理员账户：`admin` / `admin123`
+- 首次运行：系统会自动创建数据库表和默认管理员
+
+---
+
+🏗️ 系统架构
+
+数据库表结构
 - `users` - 用户信息表
 - `admins` - 管理员表  
-- `stations` - API站点表
+- `stations` - API 站点表
 - `settings` - 系统设置表
 - `user_stations` - 用户站点关联表
 
-### 核心功能模块
+核心功能模块
 
-#### 1. 认证系统
+1. 认证系统
+
 ```typescript
 // 用户登录 → 用户系统
 // 管理员登录 → 管理系统
 // 统一会话，无缝切换
 ```
 
-#### 2. API 站点管理
+2. API 站点管理
 - 添加/编辑/删除 API 站点
 - 自动获取模型列表
 - 检查站点可用性
 - 查询使用额度
 
-#### 3. 模型测试
+3. 模型测试
 - 支持流式/非流式响应
 - 多模型批量测试
 - 实时结果展示
 
-#### 4. 统计监控
+4. 统计监控
 - 站点状态统计
 - 使用情况分析
 - 可视化图表展示
 
-## 使用指南
+---
 
-### 用户系统
-1. **注册/登录**：创建账户或使用现有账户登录
-2. **管理API站点**：添加和管理你的AI API中转站
-3. **测试模型**：选择模型进行实时测试
-4. **查看统计**：在仪表盘查看使用情况
+📖 使用指南
 
-### 管理员系统
-1. **管理员登录**：使用管理员账户登录
-2. **用户管理**：查看和管理所有用户
-3. **系统监控**：查看全局统计信息
-4. **系统设置**：配置系统参数
+用户系统
+1. 注册/登录：创建账户或使用现有账户登录
+2. 管理 API 站点：添加和管理你的 AI API 中转站
+3. 测试模型：选择模型进行实时测试
+4. 查看统计：在仪表盘查看使用情况
 
-### API 站点配置
-添加API站点时需要提供：
+管理员系统
+1. 管理员登录：使用管理员账户登录
+2. 用户管理：查看和管理所有用户
+3. 系统监控：查看全局统计信息
+4. 系统设置：配置系统参数
+
+API 站点配置
+添加 API 站点时需要提供：
 - 站点名称
-- API地址
-- API密钥
+- API 地址
+- API 密钥
 - 可选参数
 
-## 开发特性
+---
 
-### 技术栈
-- **前端**：Next.js 14, React, TypeScript
-- **样式**：TailwindCSS
-- **数据库**：MySQL + Drizzle ORM
-- **认证**：JWT + Session
-- **HTTP客户端**：Axios
+💻 开发特性
 
-### 部分代码结构
+技术栈
+- 前端：Next.js 14, React, TypeScript
+- 样式：TailwindCSS
+- 数据库：MySQL + Drizzle ORM
+- 认证：JWT + Session
+- HTTP 客户端：Axios
+
+部分代码结构
+
 ```
 src/
 ├── app/                 # Next.js App Router
 │   ├── admin/          # 管理员系统
 │   ├── dashboard/      # 用户仪表盘
-│   ├── api/            # API路由
+│   ├── api/            # API 路由
 │   └── auth/           # 认证相关
-├── components/         # React组件
-│   ├── ui/            # 通用UI组件
+├── components/         # React 组件
+│   ├── ui/            # 通用 UI 组件
 │   └── features/      # 功能组件
 └── lib/               # 工具库
     ├── auth.ts        # 认证工具
     └── db.ts          # 数据库配置
 ```
 
-## 故障排除
+---
 
-### 常见问题
+🔧 故障排除
 
-1. **数据库连接失败**
-   - 检查MYSQL_DNS环境变量
-   - 确认MySQL服务运行正常
+常见问题
+
+1. 数据库连接失败
+   - 检查 `MYSQL_DNS` 环境变量
+   - 确认 MySQL 服务运行正常
    - 验证数据库权限
 
-2. **登录问题**
+2. 登录问题
    - 清除浏览器缓存
    - 检查网络连接
    - 确认账户密码正确
 
-3. **API测试失败**
-   - 检查API地址和密钥
+3. API 测试失败
+   - 检查 API 地址和密钥
    - 确认网络连通性
-   - 验证API服务状态
+   - 验证 API 服务状态
 
-### 日志查看
+日志查看
 系统会在控制台输出详细的运行日志，包括：
 - 数据库连接状态
 - 认证过程
-- API调用详情
+- API 调用详情
 - 错误信息
 
-## 贡献指南
+---
 
-欢迎提交Issue和Pull Request来帮助改进这个项目
+🤝 贡献指南
+
+欢迎提交 Issue 和 Pull Request 来帮助改进这个项目
