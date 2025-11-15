@@ -4,10 +4,10 @@ FROM node:20-alpine
 WORKDIR /app
 
 # 复制依赖文件
-COPY package.json package-lock.json* ./
+COPY package.json ./
 
-# 安装依赖
-RUN npm ci --only=production --ignore-scripts
+# 安装依赖（不依赖 lock 文件）
+RUN npm install --omit=dev --ignore-scripts
 
 # 复制源代码
 COPY . .
