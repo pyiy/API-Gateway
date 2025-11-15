@@ -1,12 +1,4 @@
 # API Gateway Manager
-## 环境变量
-MYSQL_DNS
-- 格式如下：
-- mysql://用户名:密码@host:port/test?ssl=true
-ADMIN_USERNAME
-- 管理员用户名，默认为admin
-ADMIN_PASSWORD
-- 管理员密码，默认为admin123
 
 ### 系统介绍
 这是一个功能完整的AI API中转站管理系统，基于Next.js构建，提供多用户支持、API站点管理、模型测试和统一认证等功能。
