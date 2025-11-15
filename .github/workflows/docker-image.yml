@@ -5,8 +5,10 @@ WORKDIR /app
 # 复制所有文件
 COPY . .
 
-# 安装依赖并构建
+# 安装依赖
 RUN npm install --no-audit --no-fund
+
+# 构建项目
 RUN npm run build
 
 # 设置环境变量
