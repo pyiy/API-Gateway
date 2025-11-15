@@ -34,14 +34,19 @@
 - **实时搜索**：模型列表支持模糊搜索
 - **Toast提示**：友好的操作反馈
 
+### 🏆 多平台部署
+- **支持vercel一键部署**
+- **支付服务器部署手动**
+- **支持docker部署**
+
 ## 快速开始
 
 ### 环境要求
-- Node.js 18+
+- Node.js 18+（vercel）
 - MySQL 5.7+
 - 现代浏览器
 
-### 安装步骤
+### 服务器部署
 
 1. **克隆项目**
 ```bash
@@ -66,6 +71,12 @@ ADMIN_PASSWORD=admin123
 ```bash
 npm run dev
 ```
+### vercel部署
+1. **克隆项目**
+2. **打开vercel.com官网**
+3. **创建并导入该项目**
+4. **设置MYSQL_DNS，ADMIN_USERNAME，ADMIN_PASSWORD环境变量**
+5. **部署并设置自定义域名**
 
 ### 默认账户
 - **管理员账户**：`admin` / `admin123`
@@ -179,4 +190,4 @@ src/
 
 ## 贡献指南
 
-欢迎提交Issue和Pull Request来帮助改进这个项目。
+欢迎提交Issue和Pull Request来帮助改进这个项目
