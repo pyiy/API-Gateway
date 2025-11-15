@@ -76,7 +76,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                   <span className="hidden sm:inline">设置</span>
                 </Button>
               </Link>
-              {isAdmin && (
+              {!!isAdmin && (
                 <Link href="/admin/dashboard">
                   <Button variant="outline" size="sm">
                     <Shield className="h-4 w-4 mr-2" />
