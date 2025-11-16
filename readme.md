@@ -79,6 +79,8 @@ npm install
 MYSQL_DNS=mysql://username:password@host:port/database?ssl=true
 ADMIN_USERNAME=admin
 ADMIN_PASSWORD=admin123
+JWT_SECRET=your-jwt-secret
+
 
 # 4. 启动应用
 npm run dev
