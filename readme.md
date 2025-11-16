@@ -81,7 +81,6 @@ ADMIN_USERNAME=admin
 ADMIN_PASSWORD=admin123
 JWT_SECRET=your-jwt-secret
 
-
 # 4. 启动应用
 npm run dev
 ```
@@ -91,7 +90,7 @@ Vercel 部署
 1. 克隆项目
 2. 打开 vercel.com 官网
 3. 创建并导入该项目
-4. 设置 `MYSQL_DNS`、`ADMIN_USERNAME`、`ADMIN_PASSWORD` 环境变量
+4. 设置 `MYSQL_DNS`、`ADMIN_USERNAME`、`ADMIN_PASSWORD`、`JWT_SECRET` 环境变量
 5. 部署并设置自定义域名
 
 Docker 部署
@@ -104,6 +103,7 @@ docker run -d \
   -e MYSQL_DNS="mysql://username:password@host:port/database?ssl=true" \
   -e ADMIN_USERNAME="admin" \
   -e ADMIN_PASSWORD="admin123" \
+  -e JWT_SECRET="your-jwt-secret" \
   -p 3000:3000 \
   ghcr.io/eraycc/api-gateway-manager:latest
 ```
@@ -123,6 +123,7 @@ services:
       - MYSQL_DNS=mysql://username:password@host:port/database?ssl=true
       - ADMIN_USERNAME=admin
       - ADMIN_PASSWORD=admin123
+      - JWT_SECRET=your-jwt-secret
     ports:
       - "3000:3000"
     restart: unless-stopped
@@ -135,7 +136,7 @@ docker-compose up -d
 ```
 
 方法 3：使用huggingface 抱脸 duplicate一键部署
-访问[hf抱脸](https://huggingface.co/spaces/g2i/Ai-Manager?duplicate=true)样板房，点击duplicate复制空间，设置内修改环境变量即可
+访问[hf抱脸](https://huggingface.co/spaces/g2i/Ai-Manager?duplicate=true)样板房，点击duplicate复制空间，设置修改环境变量即可
 
 默认账户
 - 管理员账户：`admin` / `admin123`
